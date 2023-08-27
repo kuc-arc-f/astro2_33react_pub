@@ -7,7 +7,7 @@ import AlertSuccess from '../common/AlertSuccess'
 const ALERT_ERROS_ID = "alert_error_id_1";
 const ALERT_SUCCESS_ID = "alert_success_id_1";
 const ERROS_MESSAGE_1 = "Error, title input";
-const SUCCESS_MESSAGE_1 = "OK, Save";
+let SUCCESS_MESSAGE_1 = "OK, Save";
 
 //
 let pageItem: any[] = [];
@@ -49,6 +49,7 @@ function Page () {
      */
     const createTodo = async function() {
         try{
+            SUCCESS_MESSAGE_1 = "OK, Save";
             const result = await CrudIndex.addItem(ALERT_ERROS_ID);
             if(result) {
 //                displayAlert();
@@ -67,8 +68,10 @@ function Page () {
      */
     const todoDelete = async function(id: number) {
         try{
+            SUCCESS_MESSAGE_1 = "OK, Delete";
             const result = await CrudIndex.delete(id);
             if(result) {
+                CrudIndex.displayAlert(ALERT_SUCCESS_ID)
                 getList();
             }
         } catch (e) {
