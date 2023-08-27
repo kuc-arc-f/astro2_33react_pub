@@ -26,6 +26,23 @@ const Crud = {
     }
   },  
   /**
+   * 
+   * @param
+   *
+   * @return
+   */  
+  clearInputValues: function() : void
+  {
+    try{
+      // inputタグから値を取得し、オブジェクトにセットする
+      const title = (<HTMLInputElement>document.querySelector("#title"));
+      if(title) {title.value = "";}
+    } catch (e) {
+      console.error(e);
+      throw new Error('Error , getInputValues');
+    }
+  }, 
+  /**
   * startProc
   * @param
   *

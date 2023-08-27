@@ -33,7 +33,7 @@ console.log(items);
      *
      * @return
      */
-    addItem : async function() : Promise<any>
+    addItem : async function(idName: string) : Promise<any>
     {
         try{
             let ret = false;
@@ -41,12 +41,18 @@ console.log(items);
             values.userId = import.meta.env.PUBLIC_USER_ID;
             values.content = "";
             values.completed = 1;
-console.log(values);
+//console.log(values);
+            if(!values.title) {
+                this.displayAlert(idName);
+                return ret;
+            }
             const json = await HttpCommon.server_post(values, '/todos/create');
-        console.log(json);
+console.log(json);
             if (json.ret ===  LibConfig.OK_CODE) {
                 ret = true;
-            } 
+            }
+            //clear
+            Crud.clearInputValues(); 
             return ret;
         } catch (e) {
             console.error("Error, addItem");
@@ -54,7 +60,21 @@ console.log(values);
             throw new Error('Error , addItem');
         }
     },
-  /**
+   /**
+   *
+   * @param key: any
+   *
+   * @return
+   */     
+    displayAlert: function (idName: string) {
+        //console.log("displayAlert=");
+        const elm = document.querySelector(`#${idName}`);
+        if(elm) {elm.classList.remove('d-none');}
+        setTimeout(function(){
+            if(elm) {elm.classList.add('d-none');}
+        }, 4000)
+    },
+   /**
    * delete:
    * @param key: any
    *

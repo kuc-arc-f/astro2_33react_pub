@@ -1,6 +1,14 @@
 import {useState, useEffect}  from 'react';
-import HttpCommon from '../../lib/HttpCommon';
+//import HttpCommon from '../../lib/HttpCommon';
 import CrudIndex from './CrudIndex';
+import AlertError from '../common/AlertError'
+import AlertSuccess from '../common/AlertSuccess'
+//
+const ALERT_ERROS_ID = "alert_error_id_1";
+const ALERT_SUCCESS_ID = "alert_success_id_1";
+const ERROS_MESSAGE_1 = "Error, title input";
+const SUCCESS_MESSAGE_1 = "OK, Save";
+
 //
 let pageItem: any[] = [];
 //
@@ -14,12 +22,6 @@ function Page () {
     //
     useEffect(() => {
         (async () => {
-            /*
-            const d = await CrudIndex.getList()
-            pageItem = d;
-            updateTimestap();
-console.log(d);
-            */
             getList();
         })()
 
@@ -39,7 +41,6 @@ console.log(d);
             console.error(e);
         } 
     }
-
     /**
      *
      * @param
@@ -48,9 +49,11 @@ console.log(d);
      */
     const createTodo = async function() {
         try{
-            const result = await CrudIndex.addItem();
+            const result = await CrudIndex.addItem(ALERT_ERROS_ID);
             if(result) {
-                window.location.reload();
+//                displayAlert();
+                getList();
+                CrudIndex.displayAlert(ALERT_SUCCESS_ID)
             }
         } catch (e) {
             console.error(e);
@@ -96,7 +99,10 @@ console.log(updatetime);
             <hr />
         </div>
         )
-        })}        
+        })}
+        {/* Alert */}
+        <AlertError idName={ALERT_ERROS_ID} message={ERROS_MESSAGE_1} />  
+        <AlertSuccess idName={ALERT_SUCCESS_ID} message={SUCCESS_MESSAGE_1} />      
     </div>    
     );
 }
