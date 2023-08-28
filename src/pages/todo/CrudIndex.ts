@@ -39,7 +39,7 @@ console.log(items);
             let ret = false;
             const values = Crud.getInputValues();
             values.userId = import.meta.env.PUBLIC_USER_ID;
-            values.content = "";
+//            values.content = "";
             values.completed = 1;
 //console.log(values);
             if(!values.title) {
