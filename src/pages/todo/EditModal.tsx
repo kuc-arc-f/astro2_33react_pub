@@ -2,9 +2,14 @@
 import {useEffect}  from 'react';
 import Crud from './Crud';
 import CrudEdit from './CrudEdit';
+import CrudIndex from './CrudIndex';
+import AlertSuccess from '../common/AlertSuccess'
+
 const MODAL_NAME= Crud.modalIdName.edit;
 const SYSTEM_NAME = import.meta.env.PUBLIC_SYSTEM_NAME;
 const ALERT_ERROR_ID = "alert_error_id_1";
+const ALERT_SUCCESS_ID = "alert_success_edit_id_1";
+let SUCCESS_MESSAGE_1 = "OK, Save";
 //
 function Page(props: any) {
 console.log(props);
@@ -32,9 +37,11 @@ console.log(props);
             const result = await CrudEdit.updateItem(Number(props.pageItem.id), ALERT_ERROR_ID);
             if(result) {
                 console.log("OK, updateTodo");
-//                CrudIndex.displayAlert(ALERT_SUCCESS_ID)
+                CrudIndex.displayAlert(ALERT_SUCCESS_ID)
                 //@ts-ignore
-                MicroModal.close(MODAL_NAME);
+//                MicroModal.close(MODAL_NAME);
+                setTimeout(function(){ location.reload();
+                }, 3000)
             }
         } catch (e) {
             console.error(e);
@@ -72,14 +79,16 @@ console.log(props);
                     defaultValue={props.pageItem.content}></textarea>
                 </div>
             </main>
-            <footer className="modal__footer">
-                <button className="modal__btn modal__btn-primary" onClick={()=>{closeModal()}}
-                >Close</button>
-                <button className="btn btn-primary ms-2" onClick={()=>{updateTodo()}}
+            <footer className="modal__footer text-end">
+                <button className="btn btn-primary mx-2" onClick={()=>{updateTodo()}}
                 >Save</button>
+                <button className="btn btn-secondary" onClick={()=>{closeModal()}}
+                >Close</button>
             </footer>
             </div>
         </div>
+        {/* alert */}
+        <AlertSuccess idName={ALERT_SUCCESS_ID} message={SUCCESS_MESSAGE_1} /> 
         <style>{`
         #${MODAL_NAME}-content { min-height: 400px; }
         #${MODAL_NAME} .modal__container .text_input_w180 { width: 180px;}     
@@ -100,3 +109,6 @@ console.log(props);
 }
 //
 export default Page;
+/*
+<button className="modal__btn modal__btn-primary" onClick={()=>{closeModal()}}
+*/
